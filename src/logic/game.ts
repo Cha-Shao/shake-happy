@@ -50,21 +50,21 @@ class Game {
       this.elements.push(item)
     }
 
-    // 测试用 物理引擎可视化
-    const render = Render.create({
-      element: document.getElementById('debug')!,
-      engine: this.engine,
-      options: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        showVelocity: true,
-        showAngleIndicator: true,
-      },
-    })
-    Render.run(render)
-    // create runner
-    const runner = Runner.create()
-    Runner.run(runner, this.engine)
+    // // 测试用 物理引擎可视化
+    // const render = Render.create({
+    //   element: document.getElementById('debug')!,
+    //   engine: this.engine,
+    //   options: {
+    //     width: window.innerWidth,
+    //     height: window.innerHeight,
+    //     showVelocity: true,
+    //     showAngleIndicator: true,
+    //   },
+    // })
+    // Render.run(render)
+    // // create runner
+    // const runner = Runner.create()
+    // Runner.run(runner, this.engine)
 
     // 设置渲染循环
     this.pixi.ticker.add(() => this.update())
