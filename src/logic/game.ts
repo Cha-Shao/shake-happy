@@ -71,6 +71,8 @@ class Game {
   }
 
   update() {
+    this.engine.gravity.x = this.gravity.x
+    this.engine.gravity.y = this.gravity.y
     // 60 fps
     Engine.update(this.engine, 1e3 / 60)
 
