@@ -4,7 +4,6 @@ import Game from "../logic/game"
 
 const Scene = () => {
   const app = useApp()
-  globalThis.__PIXI_APP__ = app
 
   const [gravity, setGravity] = useState<{ x: number, y: number }>({ x: 0, y: 1 })
 
