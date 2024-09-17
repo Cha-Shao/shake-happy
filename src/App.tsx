@@ -3,7 +3,8 @@ import Scene from './components/Scene'
 import { useEffect, useState } from 'react'
 
 function App() {
-  const [gravity, setGravity] = useState<{ x: number, y: number }>({ x: 0, y: 1 })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_gravity, setGravity] = useState<{ x: number, y: number }>({ x: 0, y: 1 })
 
   const handleMotionEvent = (e: DeviceMotionEvent) => {
     setGravity({
@@ -24,7 +25,7 @@ function App() {
     <SceneProvider>
       <Scene />
     </SceneProvider>
-    <div style={{
+    {/* <div style={{
       position: 'fixed',
       background: 'black',
       top: '0',
@@ -32,7 +33,7 @@ function App() {
       color: 'white',
     }}>
       [{gravity.x}, {gravity.y}]
-    </div>
+    </div> */}
     <div
       id='debug'
       style={{

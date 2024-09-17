@@ -1,4 +1,4 @@
-import { Engine, Render, Runner } from "matter-js"
+import { Engine } from "matter-js"
 import { Application, } from "pixi.js"
 import Item from "./item"
 import Border from "./border"
