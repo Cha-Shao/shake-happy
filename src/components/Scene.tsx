@@ -11,8 +11,8 @@ const Scene = () => {
 
   const handleMotionEvent = (e: DeviceMotionEvent) => {
     setGravity({
-      x: (e.accelerationIncludingGravity?.x || 0) * -0.2,
-      y: (e.accelerationIncludingGravity?.y || 9.8) * 0.2
+      x: (e.accelerationIncludingGravity?.x ?? 0) * -0.2,
+      y: (e.accelerationIncludingGravity?.y ?? 9.8) * 0.2
     })
   }
 
