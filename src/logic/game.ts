@@ -1,4 +1,4 @@
-import { Engine, Render, Runner, } from "matter-js"
+import { Engine, Render, Runner } from "matter-js"
 import { Application, } from "pixi.js"
 import Item from "./item"
 import Border from "./border"
@@ -19,7 +19,7 @@ const itemWidth = Math.min(
   window.innerHeight,
   Math.sqrt(area * 0.8 / itemCount)
 )
-const itemScale = itemWidth / 64
+const itemScale = itemWidth / 256
 const columnCount = Math.ceil(window.innerWidth / itemWidth)
 
 class Game {

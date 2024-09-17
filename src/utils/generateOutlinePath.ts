@@ -1,70 +1,63 @@
-import { Canvas, FabricImage } from "fabric";
+import { Canvas, FabricImage } from "fabric"
 
 interface Point {
-  x: number;
-  y: number;
+  x: number
+  y: number
 }
 
 async function generateOutlinePath(
   imagePath: string,
-): Promise<Point[]> {
-  return new Promise((res) => {
-    FabricImage.fromURL(imagePath)
-      .then(img => {
-        const canvas = new Canvas(void 0, {
+) {
+  return await FabricImage.fromURL(imagePath)
+    .then(img => {
+      const canvas = new Canvas(
+        void 0,
+        {
           width: img.width,
           height: img.height,
-        });
-        canvas.add(img);
-        canvas.renderAll();
+        }
+      )
 
-        const ctx = canvas.getContext();
-        const imageData = ctx.getImageData(0, 0, img.width, img.height);
-        const data = imageData.data;
+      canvas.add(img)
+      canvas.renderAll()
 
-        const width = img.width;
-        const height = img.height;
+      const ctx = canvas.getContext()
+      const imageData = ctx.getImageData(0, 0, img.width, img.height)
+      const data = imageData.data
 
-        // Find edges using a simple edge detection algorithm
-        const edges: Point[] = [];
-        for (let y = 1; y < height - 1; y++) {
-          for (let x = 1; x < width - 1; x++) {
-            const index = (y * width + x) * 4;
-            const alpha = data[index + 3];
-            if (alpha > 0) {
-              // Check if any neighboring pixel is transparent
-              if (
-                data[index - 4 + 3] === 0 ||
-                data[index + 4 + 3] === 0 ||
-                data[index - width * 4 + 3] === 0 ||
-                data[index + width * 4 + 3] === 0
-              ) {
-                edges.push({ x, y });
-              }
-            }
+      // Find edges using a simple edge detection algorithm
+      const edges: Point[] = []
+      for (let y = 1; y < img.height - 1; y++) {
+        for (let x = 1; x < img.width - 1; x++) {
+          const index = (y * img.width + x) * 4
+          const alpha = data[index + 3]
+          if (alpha > 0) {
+            edges.push({ x, y })
           }
         }
+      }
 
-        // Simplify the path to 16 points using Douglas-Peucker Algorithm
-        const simplifiedPath = simplifyPath(edges, 64);
+      // return edges.map(point => [point.x, point.y].join(' ')).join(' ')
 
-        res(simplifiedPath);
-      });
-  });
+      // Simplify the path to 16 points using Douglas-Peucker Algorithm
+      const simplifiedPath = simplifyPath(edges, 64)
+
+      return simplifiedPath.map(point => [point.x, point.y].join(' ')).join(' ')
+    })
 }
 
 function simplifyPath(points: Point[], maxPoints: number): Point[] {
   if (points.length <= maxPoints) {
-    return points;
+    return points
   }
 
-  const simplified: Point[] = [];
-  const step = Math.ceil(points.length / maxPoints);
+  const simplified: Point[] = []
+  const step = Math.ceil(points.length / maxPoints)
   for (let i = 0; i < points.length; i += step) {
-    simplified.push(points[i]);
+    simplified.push(points[i])
   }
 
-  return simplified;
+  return simplified
 }
 
 export default generateOutlinePath
