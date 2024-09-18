@@ -12,7 +12,7 @@ const SceneProvider = ({
       width={window.innerWidth}
       height={window.innerHeight}
       options={{
-        backgroundColor: 0xf0f0f6,
+        backgroundAlpha: 0
       }}
       onMount={setApp}
     >

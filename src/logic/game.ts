@@ -2,16 +2,8 @@ import { Engine } from "matter-js"
 import { Application, } from "pixi.js"
 import Item from "./item"
 import Border from "./border"
-import SkadiImage from "../assets/skadi.png"
-import ChenImage from "../assets/chen.png"
-import GoldenGlowImage from "../assets/goldenglow.png"
 import choice from "../utils/choice"
 
-const itemList = [
-  SkadiImage,
-  ChenImage,
-  GoldenGlowImage,
-]
 const area = window.innerWidth * window.innerHeight
 const itemCount = 16
 const itemWidth = Math.min(
@@ -19,7 +11,6 @@ const itemWidth = Math.min(
   window.innerHeight,
   Math.sqrt(area * 0.8 / itemCount)
 )
-const itemScale = itemWidth / 256
 const columnCount = Math.ceil(window.innerWidth / itemWidth)
 
 class Game {
@@ -29,7 +20,10 @@ class Game {
   elements: Item[] = []
   gravity = { x: 0, y: 1 }
 
-  constructor(pixi: Application) {
+  constructor(
+    pixi: Application,
+    itemList: string[]
+  ) {
     this.pixi = pixi
     this.engine = Engine.create({
       gravity: this.gravity
@@ -44,7 +38,7 @@ class Game {
           x: (i % columnCount + 0.5) * itemWidth,
           y: (Math.floor(i / columnCount) + 0.5) * itemWidth
         },
-        itemScale
+        itemWidth
       )
       this.pixi.stage.addChild(item)
       this.elements.push(item)

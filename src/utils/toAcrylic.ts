@@ -2,13 +2,12 @@ import { Canvas, FabricImage } from "fabric"
 
 const toAcrylic = async (
   imagePath: string,
-  scale: number = 1
+  width: number
 ) => {
   return await FabricImage.fromURL(imagePath).then(
     img => {
-      const maxDimension = 256 * scale
-      const scaleFactor = maxDimension / Math.max(img.width, img.height)
-      img.scale(scaleFactor)
+      const scale = width / img.width
+      img.scale(scale)
 
       img.set({
         left: 8,
@@ -21,8 +20,8 @@ const toAcrylic = async (
       const canvas = new Canvas(
         void 0,
         {
-          width: img.width * scaleFactor + 16,
-          height: img.height * scaleFactor + 16,
+          width: img.width * scale + 16,
+          height: img.height * scale + 16,
         }
       )
 

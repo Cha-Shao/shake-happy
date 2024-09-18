@@ -1,7 +1,6 @@
-import { Bodies, Body, Composite, Vertices } from "matter-js"
+import { Bodies, Body, Composite } from "matter-js"
 import Game from "./game"
 import { SCALE_MODES, Sprite, Texture } from "pixi.js"
-import generateOutlinePath from "../utils/generateOutlinePath"
 import toAcrylic from "../utils/toAcrylic"
 
 class Item extends Sprite {
@@ -12,7 +11,7 @@ class Item extends Sprite {
     image: string,
     game: Game,
     position: { x: number, y: number } = { x: 50, y: 50 },
-    scale: number = 1
+    width: number
   ) {
     const texture = Texture.from(
       // image,
@@ -25,36 +24,38 @@ class Item extends Sprite {
     this.game = game
 
     this.anchor.set(0.5)
-    this.scale.set(scale)
 
     this.position.set(position.x, position.y)
-    this.rigidBody = Bodies.rectangle(
+    this.rigidBody = Bodies.polygon(
       position.x,
       position.y,
-      256, 256
+      8,
+      128
     )
-    this.init(image)
+    this.init(image, width)
   }
 
-  async init(image: string) {
+  async init(image: string, width: number) {
     const texture = Texture.from(
       // image,
-      await toAcrylic(image),
+      await toAcrylic(
+        image,
+        width
+      ),
       {
         scaleMode: SCALE_MODES.NEAREST
       }
     )
     this.texture = texture
 
-    this.rigidBody = Bodies.fromVertices(
-      this.position.x,
-      this.position.y,
-      [Vertices.fromPath(
-        await generateOutlinePath(
-          await toAcrylic(image, this.scale.x)
-        ),
-        Bodies.rectangle(0, 0, 64, 64)
-      )]
+    this.rigidBody = Bodies.polygon(
+      this.rigidBody.position.x,
+      this.rigidBody.position.y,
+      8,
+      width / 2,
+      {
+        angle: Math.random() * Math.PI * 2,
+      }
     )
     Composite.add(
       this.game.engine.world,
