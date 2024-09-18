@@ -1,32 +1,31 @@
 import SceneProvider from './components/SceneProvider'
 import Scene from './components/Scene'
-import { useEffect } from 'react'
+import Webcam from 'react-webcam'
 
 function App() {
-
-  const setBackground = async () => {
-    console.log('setBackground')
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => stream)
-      .catch(() => null)
-    if (stream) {
-      const video = document.createElement('video')
-      video.srcObject = stream
-      video.onloadedmetadata = () => {
-        video.play()
-      }
-      document.body.appendChild(video)
-    }
-  }
-
-  useEffect(() => {
-    setBackground()
-  }, [])
-
   return (<>
-    <SceneProvider>
-      <Scene />
-    </SceneProvider>
+    <div style={{
+      position: 'fixed',
+      inset: '0',
+      zIndex: 2,
+    }}>
+      <SceneProvider>
+        <Scene />
+      </SceneProvider>
+    </div>
+    <Webcam
+      style={{
+        position: 'fixed',
+        inset: '0',
+        zIndex: 1,
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+      }}
+      videoConstraints={{
+        facingMode: 'environment',
+      }}
+    />
     <div
       id='debug'
       style={{
