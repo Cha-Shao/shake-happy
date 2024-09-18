@@ -5,17 +5,18 @@ import { useEffect } from 'react'
 function App() {
 
   const setBackground = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => stream)
-      .catch(() => null)
-    if (stream) {
-      const video = document.createElement('video')
-      video.srcObject = stream
-      video.onloadedmetadata = () => {
-        video.play()
-      }
-      document.body.appendChild(video)
-    }
+    console.log('setBackground')
+    // const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+    //   .then(stream => stream)
+    //   .catch(() => null)
+    // if (stream) {
+    //   const video = document.createElement('video')
+    //   video.srcObject = stream
+    //   video.onloadedmetadata = () => {
+    //     video.play()
+    //   }
+    //   document.body.appendChild(video)
+    // }
   }
 
   useEffect(() => {
