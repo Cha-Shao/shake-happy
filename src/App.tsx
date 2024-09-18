@@ -6,17 +6,17 @@ function App() {
 
   const setBackground = async () => {
     console.log('setBackground')
-    // const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-    //   .then(stream => stream)
-    //   .catch(() => null)
-    // if (stream) {
-    //   const video = document.createElement('video')
-    //   video.srcObject = stream
-    //   video.onloadedmetadata = () => {
-    //     video.play()
-    //   }
-    //   document.body.appendChild(video)
-    // }
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => stream)
+      .catch(() => null)
+    if (stream) {
+      const video = document.createElement('video')
+      video.srcObject = stream
+      video.onloadedmetadata = () => {
+        video.play()
+      }
+      document.body.appendChild(video)
+    }
   }
 
   useEffect(() => {
