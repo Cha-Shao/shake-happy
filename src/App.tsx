@@ -7,6 +7,7 @@ function App() {
   const mainRef = useRef<HTMLDivElement>(null)
 
   const [fullScreen, setFullScreen] = useState<boolean>(false)
+  const [useCamera, setUseCamera] = useState<boolean>(true)
 
   return (
     <main
@@ -29,19 +30,23 @@ function App() {
           <Scene />
         </SceneProvider>
       </div>
-      <Webcam
-        style={{
-          position: 'fixed',
-          inset: '0',
-          zIndex: 1,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-        }}
-        videoConstraints={{
-          facingMode: 'environment',
-        }}
-      />
+      {useCamera && (
+        <Webcam
+          style={{
+            position: 'fixed',
+            inset: '0',
+            zIndex: 1,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            backgroundColor: '#f0f0f6',
+          }}
+          videoConstraints={{
+            facingMode: 'environment',
+          }}
+          onUserMediaError={() => setUseCamera(false)}
+        />
+      )}
       <div
         id='debug'
         style={{
