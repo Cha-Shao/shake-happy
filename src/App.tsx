@@ -10,17 +10,7 @@ function App() {
   const [useCamera, setUseCamera] = useState<boolean>(true)
 
   return (
-    <main
-      ref={mainRef}
-      onClick={() => {
-        if (!fullScreen) {
-          mainRef.current?.requestFullscreen()
-        } else {
-          document.exitFullscreen()
-        }
-        setFullScreen(mainRef.current === document.fullscreenElement)
-      }}
-    >
+    <div>
       <div style={{
         position: "fixed",
         left: "0",
@@ -35,42 +25,54 @@ function App() {
         <p>Github：<a href="https://github.com/Cha-Shao/shake-happy" target="_blank">shake-happy</a></p>
         <p>图像禁止盈利</p>
       </div>
-      <div style={{
-        position: "fixed",
-        inset: "0",
-        zIndex: 2,
-      }}>
-        <SceneProvider>
-          <Scene />
-        </SceneProvider>
-      </div>
-      {useCamera && (
-        <Webcam
+      <main
+        ref={mainRef}
+        onClick={() => {
+          if (!fullScreen) {
+            mainRef.current?.requestFullscreen()
+          } else {
+            document.exitFullscreen()
+          }
+          setFullScreen(mainRef.current === document.fullscreenElement)
+        }}
+      >
+        <div style={{
+          position: "fixed",
+          inset: "0",
+          zIndex: 2,
+        }}>
+          <SceneProvider>
+            <Scene />
+          </SceneProvider>
+        </div>
+        {useCamera && (
+          <Webcam
+            style={{
+              position: "fixed",
+              inset: "0",
+              zIndex: 1,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              backgroundColor: "#f0f0f6",
+            }}
+            videoConstraints={{
+              facingMode: "environment",
+            }}
+            onUserMediaError={() => setUseCamera(false)}
+          />
+        )}
+        <div
+          id="debug"
           style={{
             position: "fixed",
             inset: "0",
-            zIndex: 1,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            backgroundColor: "#f0f0f6",
+            opacity: "0.5",
+            pointerEvents: "none",
           }}
-          videoConstraints={{
-            facingMode: "environment",
-          }}
-          onUserMediaError={() => setUseCamera(false)}
         />
-      )}
-      <div
-        id="debug"
-        style={{
-          position: "fixed",
-          inset: "0",
-          opacity: "0.5",
-          pointerEvents: "none",
-        }}
-      />
-    </main>
+      </main>
+    </div>
   )
 }
 
