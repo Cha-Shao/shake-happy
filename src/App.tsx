@@ -26,6 +26,8 @@ function App() {
         left: "0",
         bottom: "0",
         fontSize: "0.5rem",
+        color: "white",
+        opacity: "0.5",
         zIndex: 3,
       }}>
         <p>程序：<a href="https://space.bilibili.com/23265721" target="_blank">叉烧</a></p>
